@@ -1,0 +1,50 @@
+@media only screen and (max-width: 760px) {
+  .image_illus {
+    display: none;
+  }
+  .profile_grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 0.8fr 1fr;
+    margin: 1rem 0.5rem;
+  }
+  .input_header {
+    display: none;
+  }
+  .info_profile {
+    grid-column: 1/-1;
+    grid-row: 2/3;
+    margin-top: 0;
+  }
+  .profile_image {
+    grid-column: 1/2;
+    grid-row: 1/2;
+  }
+  .flex_info {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+  }
+  .edit_btn1 {
+    margin: 0;
+    width: 90%;
+  }
+  .profile_grid {
+    grid-template-columns: 30% 60%;
+    column-gap: 1rem;
+  }
+  .flex_info {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+  }
+  .follow_btn,
+  .edit_btn {
+    margin: 0;
+  }
+  .verify_icons {
+    height: 18px;
+  }
+  .userName_profile {
+    font-size: 1.6rem;
+  }
+}
