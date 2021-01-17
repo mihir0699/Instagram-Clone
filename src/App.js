@@ -8,17 +8,25 @@ import Login from "./components/Login";
 import Profile from "./components/Profile";
 import PrivateRoute from "./components/PrivateRoutes";
 import Header from "./components/Header";
+
+const DefaultContainer = () => (
+  <div>
+    <div className="container">
+      <Header />
+      <PrivateRoute path="/:userName" component={Profile} />
+    </div>
+  </div>
+);
 function App() {
   return (
     <div className="App">
       <ToastProvider>
         <FireState>
           <Router>
-            <Header />
             <Switch>
               <Route exact path="/signup" component={Signup} />
               <Route exact path="/" component={Login} />
-              <PrivateRoute path="/:userName" component={Profile} />
+              <PrivateRoute component={DefaultContainer} />
             </Switch>
           </Router>
         </FireState>

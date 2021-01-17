@@ -3,10 +3,17 @@ import React, { useContext, useState, useEffect } from "react";
 import { Link, useParams, Redirect } from "react-router-dom";
 import UserImage from "../images/user.svg";
 import firebase from "firebase/app";
-import { Button, Modal, Form, Input, Upload } from "antd";
+import { Button, Modal, Form, Input, Upload, Tabs } from "antd";
 import Loader from "./Loader";
+import Posts from "./Posts";
+import PostImage from "../icons/posts.png";
+import Bookmark from "../icons/bookmark.svg";
 import { ToastProvider, useToasts } from "react-toast-notifications";
-import { UploadOutlined } from "@ant-design/icons";
+import {
+  UploadOutlined,
+  AppleOutlined,
+  AndroidOutlined,
+} from "@ant-design/icons";
 import ImgCrop from "antd-img-crop";
 import "antd/es/modal/style";
 import "antd/es/slider/style";
@@ -17,6 +24,7 @@ const Profile = (props) => {
   const { user, updateProfile } = useContext(FirebaseContext);
   let { userName } = useParams();
   const [file, setFile] = useState(null);
+  const { TabPane } = Tabs;
   const [User, setUser] = useState(null);
   const normFile = (e) => {
     setFile(e.target.files[0]);
@@ -588,6 +596,29 @@ const Profile = (props) => {
                 </Form.Item>
               </Form>
             </Modal>
+            <Tabs defaultActiveKey="1" centered="true">
+              <TabPane
+                tab={
+                  <span>
+                    <img src={PostImage} className="icons" />
+                    Posts
+                  </span>
+                }
+                key="1"
+              >
+                <Posts userName={userName} />
+              </TabPane>
+              <TabPane
+                tab={
+                  <span>
+                    <img src={Bookmark} className="icons" />
+                    Saved
+                  </span>
+                }
+                key="2"
+              ></TabPane>
+            </Tabs>
+            ,
           </div>
         ) : (
           <Loader />

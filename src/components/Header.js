@@ -2,17 +2,24 @@ import React, { useContext, useState, useEffect } from "react";
 import InstaImage from "../images/insta_image.png";
 import Home from "../icons/home.svg";
 import Plus from "../icons/plus.svg";
+import Logout from "../icons/log-out.svg";
 import UserImage from "../images/user.svg";
 import Explore from "../icons/explore.svg";
 import FirebaseContext from "../Context/Firebase/FirebaseContext";
 import firebase from "firebase/app";
-import { Modal, Form, Button, Upload, Input } from "antd";
+import { Modal, Form, Button, Upload, Input, Alert } from "antd";
 import { UploadOutlined, InboxOutlined } from "@ant-design/icons";
+import { NavLink } from "react-router-dom";
+import { ToastProvider, useToasts } from "react-toast-notifications";
 
 const Header = () => {
-  const { user, updateProfile, loading } = useContext(FirebaseContext);
+  const { user, updateProfile, loading, uploadPost } = useContext(
+    FirebaseContext
+  );
+  const { addToast } = useToasts();
   const [users, setUsers] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [error, setError] = useState(null);
   const [file, setFile] = useState(null);
   const formItemLayout = {
     labelCol: {
@@ -23,8 +30,32 @@ const Header = () => {
     },
   };
 
-  const onFinish = (data) => {
-    console.log(data);
+  const handleLogout = () => {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        // Sign-out successful.
+      })
+      .catch((error) => {
+        // An error happened.
+      });
+  };
+
+  const onFinish = async (data) => {
+    if (!file) {
+      setError(true);
+      setTimeout(() => {
+        setError(null);
+      }, 2000);
+    } else {
+      await uploadPost(file, data.caption);
+      setIsModalVisible(false);
+      addToast("Posted successfully", {
+        appearance: "success",
+        autoDismiss: true,
+      });
+    }
   };
   const normFile = (e) => {
     if (Array.isArray(e)) {
@@ -121,7 +152,7 @@ const Header = () => {
               <img src={Home} />
             </li>
             <li>
-              <img src={Explore} />
+              <img src={Explore} className="display_explore" />
             </li>
             <li>
               <img
@@ -130,12 +161,17 @@ const Header = () => {
                 onClick={showModal}
               />
             </li>
+            <a href={user.userName}>
+              <li>
+                {user.photoURL ? (
+                  <img src={user.photoURL} className="user_header" />
+                ) : (
+                  <img src={UserImage} className="user_header" />
+                )}
+              </li>
+            </a>
             <li>
-              {user.photoURL ? (
-                <img src={user.photoURL} className="user_header" />
-              ) : (
-                <img src={UserImage} className="user_header" />
-              )}
+              <img src={Logout} onClick={handleLogout} />
             </li>
           </ul>
           <Modal
@@ -143,7 +179,17 @@ const Header = () => {
             visible={isModalVisible}
             onOk={handleOk}
             onCancel={handleCancel}
+            className="wrapper"
           >
+            {error && (
+              <Alert
+                message="Please select a file!"
+                type="error"
+                showIcon
+                className="alert_show"
+              />
+            )}
+
             <Form name="validate_other" {...formItemLayout} onFinish={onFinish}>
               <Form.Item
                 name="upload"
@@ -165,6 +211,14 @@ const Header = () => {
                   <Input.TextArea />
                 </Form.Item>
               </Form.Item>
+              <Button
+                type="primary"
+                htmlType="submit"
+                size="middle"
+                className="margin_upload"
+              >
+                Upload Post
+              </Button>
             </Form>
           </Modal>
         </nav>

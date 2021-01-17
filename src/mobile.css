@@ -47,4 +47,16 @@
   .userName_profile {
     font-size: 1.6rem;
   }
+  .display_explore {
+    display: none;
+  }
+  .header_list {
+    margin-right: 1.5rem;
+  }
+  .margin_upload {
+    margin-left: auto;
+  }
+  .no_post {
+    height: 15rem;
+  }
 }

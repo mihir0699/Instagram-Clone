@@ -17,12 +17,10 @@
 body {
   padding-top: 65px;
   height: 100vh;
-  background-color: #f8f8f8;
 }
 html {
   height: 100%;
   margin: 0;
-  background-color: #f8f8f8;
 }
 
 .signup_form {
@@ -453,4 +451,70 @@ nav {
   color: grey;
   font-weight: 400;
   font-family: Roboto "sans-serif";
+}
+
+.margin_upload {
+  margin-left: 4rem;
+}
+
+.alert_show {
+  width: 100%;
+}
+
+.icons {
+  height: 1.5rem;
+}
+
+.grid_posts {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  row-gap: 1rem;
+  justify-items: center;
+  place-items: center;
+
+  margin: 2rem 5rem;
+}
+
+.image_post {
+  width: 90%;
+  transition: 0.5s ease;
+  backface-visibility: hidden;
+  opacity: 1;
+  display: block;
+}
+
+.middle1 {
+  transition: 0.5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.image_1:hover .image_post {
+  opacity: 0.5;
+}
+
+.image_1:hover .middle1 {
+  opacity: 1;
+}
+.text1 {
+  font-weight: 500;
+  color: white;
+  font-size: 16px;
+  display: inline;
+  padding: 16px 16px;
+}
+
+.image_1 {
+  position: relative;
+  width: 100%;
+}
+
+.no_post {
+  height: 20rem;
+  margin: 2rem auto;
 }

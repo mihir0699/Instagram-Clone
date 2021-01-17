@@ -141,6 +141,38 @@ const FireState = (props) => {
     }
   };
 
+  const uploadPost = (file, caption) => {
+    let id = nanoid(15);
+    var metadata = {
+      contentType: file.type,
+    };
+    const filePath = `posts/${id}`;
+    const fileRef = firebase.storage().ref().child(filePath);
+    const uploadTask = fileRef.put(file, metadata);
+    uploadTask.on("state_changed", console.log, console.error, () => {
+      firebase
+        .storage()
+        .ref()
+        .child(filePath)
+        .getDownloadURL()
+        .then((url) => {
+          let post = {};
+          post.id = id;
+          post.email = state.user.email;
+          post.url = url;
+          post.caption = caption;
+          firebase
+            .firestore()
+            .collection("posts")
+            .doc(id)
+            .set(post)
+            .then(() => {
+              console.log("posted successfully");
+            });
+        });
+    });
+  };
+
   return (
     <FirebaseContext.Provider
       value={{
@@ -151,6 +183,7 @@ const FireState = (props) => {
         login: login,
         error: state.error,
         updateProfile,
+        uploadPost,
       }}
     >
       {" "}
