@@ -467,11 +467,10 @@ nav {
 
 .grid_posts {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: 1fr 1fr 1fr;
   row-gap: 1rem;
   justify-items: center;
   place-items: center;
-
   margin: 2rem 5rem;
 }
 
@@ -517,4 +516,124 @@ nav {
 .no_post {
   height: 20rem;
   margin: 2rem auto;
+}
+
+.post_grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 2fr 1fr;
+  margin: 1rem 8rem;
+}
+
+.post_info_grid {
+  display: grid;
+  grid-template-columns: 0.5fr 2fr 1fr;
+
+  justify-content: start;
+  justify-items: start;
+  align-items: center;
+  font-weight: 500;
+  font-family: Roboto "sans-serif";
+  color: black;
+}
+
+.image_circle {
+  height: 80%;
+  border-radius: 50%;
+}
+.image_circle1 {
+  width: 80%;
+  border-radius: 50%;
+}
+.post_image {
+  width: 100%;
+}
+.delete_post {
+  justify-self: end;
+  align-self: center;
+}
+
+.post_photo_grid {
+  display: grid;
+  grid-template-rows: 1fr 9fr;
+  grid-template-columns: 1fr;
+  grid-row: 1/-1;
+  grid-column: 1/2;
+  justify-content: center;
+}
+
+.bio_grid {
+  display: grid;
+  grid-template-columns: 0.5fr 3fr;
+  justify-content: start;
+  grid-row: 1/2;
+  justify-items: start;
+  align-content: start;
+  border-bottom: 1.2px solid #e0e0e0;
+}
+.post_userName {
+  font-weight: 500;
+  font-family: Roboto "sans-serif";
+  color: black;
+}
+
+.compo_grid {
+  grid-row: 2/3;
+  text-align: left;
+}
+
+.heart_grid {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  grid-template-rows: 1fr;
+  justify-items: start;
+  font-size: 2rem;
+}
+.heart_grid > div > i {
+  margin-right: 0.5rem;
+}
+
+.heart_grid > div {
+  margin-left: 1.3rem;
+}
+.bookmark {
+  justify-self: end;
+  align-self: center;
+}
+
+.likes_div {
+  font-weight: 500;
+  font-family: Roboto "sans-serif";
+  color: black;
+  font-size: 1rem;
+  margin-left: 1.3rem;
+}
+
+.separate {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.text_input_post {
+  display: grid;
+  grid-template-columns: 1fr 0.2fr;
+  border-bottom: 1.2px solid #e0e0e0;
+}
+.text_input_post > input {
+  outline: none;
+  border: none;
+  font-weight: 400;
+  font-family: Roboto "sans-serif";
+  font-size: 1rem;
+  padding: 1rem 1rem;
+}
+
+.post_comment {
+  background-color: white;
+  border: none;
+  outline: none;
+  color: #0095f6;
+  font-weight: 500;
+  font-family: Roboto "sans-serif";
+  font-size: 1rem;
+  cursor: pointer;
 }

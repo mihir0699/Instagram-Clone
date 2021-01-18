@@ -59,4 +59,7 @@
   .no_post {
     height: 15rem;
   }
+  .grid_posts {
+    margin: 2rem 1rem;
+  }
 }

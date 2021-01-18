@@ -8,12 +8,14 @@ import Login from "./components/Login";
 import Profile from "./components/Profile";
 import PrivateRoute from "./components/PrivateRoutes";
 import Header from "./components/Header";
+import Post from "./components/Post";
 
 const DefaultContainer = () => (
   <div>
     <div className="container">
       <Header />
-      <PrivateRoute path="/:userName" component={Profile} />
+      <PrivateRoute exact path="/posts/:postId" component={Post} />
+      <PrivateRoute exact path="/:userName" component={Profile} />
     </div>
   </div>
 );

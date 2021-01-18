@@ -161,6 +161,7 @@ const FireState = (props) => {
           post.email = state.user.email;
           post.url = url;
           post.caption = caption;
+          post.timestamp = firebase.firestore.FieldValue.serverTimestamp();
           firebase
             .firestore()
             .collection("posts")

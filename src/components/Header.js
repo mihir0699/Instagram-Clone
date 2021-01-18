@@ -161,7 +161,7 @@ const Header = () => {
                 onClick={showModal}
               />
             </li>
-            <a href={user.userName}>
+            <a href={`/${user.userName}`}>
               <li>
                 {user.photoURL ? (
                   <img src={user.photoURL} className="user_header" />
