@@ -17,6 +17,7 @@ import {
 import ImgCrop from "antd-img-crop";
 import "antd/es/modal/style";
 import "antd/es/slider/style";
+import Saved from "./Saved";
 const Profile = (props) => {
   const [contextUser, setContextUser] = useState(null);
   const { addToast } = useToasts();
@@ -26,8 +27,15 @@ const Profile = (props) => {
   const [file, setFile] = useState(null);
   const { TabPane } = Tabs;
   const [User, setUser] = useState(null);
+  const [preview, setPreview] = useState(null);
   const normFile = (e) => {
     setFile(e.target.files[0]);
+    var reader = new FileReader();
+    var url = reader.readAsDataURL(e.target.files[0]);
+    reader.onloadend = (e) => {
+      let imgSrc = [reader.result];
+      setPreview(imgSrc);
+    };
   };
   const [loading, setLoading] = useState(true);
   const [validation, setValidation] = useState({});
@@ -143,12 +151,21 @@ const Profile = (props) => {
         }
       });
   };
+  const [postsLen, setLen] = useState(0);
   useEffect(() => {
     setContextUser(user);
     if (User) {
       if (user.following && user.following.includes(User.email))
         setFollow(true);
       else setFollow(false);
+      firebase
+        .firestore()
+        .collection("posts")
+        .where("email", "==", User.email)
+        .get()
+        .then((data) => {
+          setLen(data.docs.length);
+        });
     }
   }, [user, User]);
 
@@ -435,17 +452,11 @@ const Profile = (props) => {
               </div>
               <div className="info_profile">
                 <div className="info_grid">
-                  {!User.posts ? (
-                    <div>
-                      <span className="span_1">0 </span>
-                      <span className="span_2">posts</span>
-                    </div>
-                  ) : (
-                    <div>
-                      <span>{User.posts.length} </span>
-                      <span>posts</span>
-                    </div>
-                  )}
+                  <div>
+                    <span className="span_1">{postsLen} </span>
+                    <span className="span_2">posts</span>
+                  </div>
+
                   {!User.followers || !User.followers.length ? (
                     <div>
                       <span className="span_1">0 </span>
@@ -502,9 +513,15 @@ const Profile = (props) => {
             >
               <div className="image_div">
                 {User.photoURL ? (
-                  <img src={User.photoURL} className="edit_image" />
+                  <img
+                    src={preview ? preview : User.photoURL}
+                    className="edit_image"
+                  />
                 ) : (
-                  <img src={UserImage} className="edit_image" />
+                  <img
+                    src={preview ? preview : UserImage}
+                    className="edit_image"
+                  />
                 )}{" "}
                 <div className="edit_userName">{user.userName}</div>
                 <br />
@@ -600,7 +617,11 @@ const Profile = (props) => {
               <TabPane
                 tab={
                   <span>
-                    <img src={PostImage} className="icons" />
+                    <img
+                      src={PostImage}
+                      className="icons"
+                      style={{ height: "1.8rem" }}
+                    />
                     Posts
                   </span>
                 }
@@ -608,15 +629,19 @@ const Profile = (props) => {
               >
                 <Posts userName={userName} />
               </TabPane>
-              <TabPane
-                tab={
-                  <span>
-                    <img src={Bookmark} className="icons" />
-                    Saved
-                  </span>
-                }
-                key="2"
-              ></TabPane>
+              {User.userName === user.userName && (
+                <TabPane
+                  tab={
+                    <span>
+                      <img src={Bookmark} className="icons" />
+                      Saved
+                    </span>
+                  }
+                  key="2"
+                >
+                  <Saved />
+                </TabPane>
+              )}
             </Tabs>
             ,
           </div>

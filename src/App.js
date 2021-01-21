@@ -9,12 +9,14 @@ import Profile from "./components/Profile";
 import PrivateRoute from "./components/PrivateRoutes";
 import Header from "./components/Header";
 import Post from "./components/Post";
+import Explore from "./components/Explore";
 
 const DefaultContainer = () => (
   <div>
     <div className="container">
       <Header />
       <PrivateRoute exact path="/posts/:postId" component={Post} />
+      <PrivateRoute exact path="/explore/posts" component={Explore} />
       <PrivateRoute exact path="/:userName" component={Profile} />
     </div>
   </div>

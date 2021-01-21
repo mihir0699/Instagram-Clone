@@ -6,35 +6,45 @@ import Upload from "../icons/upload.svg";
 import { Link } from "react-router-dom";
 import { Spin } from "antd";
 import Loader from "./Loader";
-const Posts = (props) => {
+const Saved = (props) => {
   const { user, updateProfile } = useContext(FirebaseContext);
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState([]);
   useEffect(() => {
-    if (props.userName) {
-      let x = [];
-      setLoading(true);
-      firebase
-        .firestore()
-        .collection("users")
-        .where("userName", "==", props.userName)
-        .get()
-        .then((u) => {
-          firebase
-            .firestore()
-            .collection("posts")
-            .where("email", "==", u.docs[0].data().email)
-            .get()
-            .then((data) => {
-              data.docs.forEach((post) => {
-                x.push(post.data());
+    let x = [];
+    let y = [];
+    setLoading(true);
+
+    firebase
+      .firestore()
+      .collection("users")
+      .doc(user.email)
+      .get()
+      .then((data) => {
+        if (data.data().bookmarks) {
+          data.data().bookmarks.forEach((post) => {
+            x.push(post);
+          });
+          if (x.length) {
+            firebase
+              .firestore()
+              .collection("posts")
+              .where("id", "in", x)
+              .get()
+              .then((data) => {
+                data.docs.forEach((d) => {
+                  y.push(d.data());
+                });
+                setPosts(y);
               });
-              setPosts(x);
-              setLoading(false);
-            });
-        });
-    }
-  }, [props.userName]);
+          }
+        } else {
+          setPosts(y);
+        }
+
+        setLoading(false);
+      });
+  }, []);
   return (
     <div>
       {loading ? (
@@ -81,4 +91,4 @@ const Posts = (props) => {
   );
 };
 
-export default Posts;
+export default Saved;

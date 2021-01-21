@@ -130,7 +130,7 @@ const Header = () => {
             <ul className="list-group">
               {showUsers.map((data) => (
                 <>
-                  <a href={data.userName}>
+                  <a href={`/${data.userName}`}>
                     <li className="list-group-item">
                       {data.photoURL ? (
                         <img src={data.photoURL} className="search_img" />
@@ -151,9 +151,11 @@ const Header = () => {
             <li>
               <img src={Home} />
             </li>
-            <li>
-              <img src={Explore} className="display_explore" />
-            </li>
+            <a href="/explore/posts">
+              <li>
+                <img src={Explore} className="display_explore" />
+              </li>
+            </a>
             <li>
               <img
                 src={Plus}

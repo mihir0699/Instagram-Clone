@@ -6,43 +6,36 @@ import Upload from "../icons/upload.svg";
 import { Link } from "react-router-dom";
 import { Spin } from "antd";
 import Loader from "./Loader";
-const Posts = (props) => {
+const Explore = (props) => {
   const { user, updateProfile } = useContext(FirebaseContext);
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState([]);
   useEffect(() => {
-    if (props.userName) {
-      let x = [];
-      setLoading(true);
-      firebase
-        .firestore()
-        .collection("users")
-        .where("userName", "==", props.userName)
-        .get()
-        .then((u) => {
-          firebase
-            .firestore()
-            .collection("posts")
-            .where("email", "==", u.docs[0].data().email)
-            .get()
-            .then((data) => {
-              data.docs.forEach((post) => {
-                x.push(post.data());
-              });
-              setPosts(x);
-              setLoading(false);
-            });
-        });
-    }
-  }, [props.userName]);
+    let x = [];
+    firebase
+      .firestore()
+      .collection("posts")
+      .orderBy("timestamp")
+      .limit(9)
+      .get()
+      .then((data) => {
+        if (data.docs.length) {
+          data.docs.forEach((post) => {
+            x.push(post.data());
+          });
+        }
+        setPosts(x);
+        setLoading(false);
+      });
+  }, []);
   return (
     <div>
       {loading ? (
-        <Spin className="spin_loader" />
+        <Loader />
       ) : posts.length ? (
         <div className="grid_posts">
           {posts.map((post) => (
-            <a href={`posts/${post.id}`}>
+            <a href={`/posts/${post.id}`}>
               <div className="image_1">
                 <img src={post.url} className="image_post" />
                 <div className="middle1">
@@ -81,4 +74,4 @@ const Posts = (props) => {
   );
 };
 
-export default Posts;
+export default Explore;

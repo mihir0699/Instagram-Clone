@@ -62,4 +62,84 @@
   .grid_posts {
     margin: 2rem 1rem;
   }
+  .post_grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.8fr 0.18fr 0.06fr 0.07fr 0.05fr;
+    border: 1px solid #e0e0e0;
+  }
+  .post_photo_grid {
+    grid-row: 1/2;
+    grid-column: 1/-1;
+  }
+  .bio_grid > img {
+    display: none;
+  }
+  .bio_grid {
+    grid-row: 3/4;
+    grid-template-columns: 3fr;
+    margin-left: 1.3rem;
+    justify-self: start;
+    align-self: start;
+  }
+  .compo_grid {
+    grid-row: 2/3;
+    grid-column: 1/-1;
+    margin-right: 0.4rem;
+    border-left: none;
+  }
+  .mobile_comments {
+    border-left: none;
+  }
+  .comments_grid {
+    display: none;
+    border-left: none;
+  }
+  .text_input_post {
+    display: none;
+  }
+
+  .separate {
+    border: none;
+  }
+  .hidden_input {
+    display: block;
+  }
+  .text_input_post1 > form {
+    display: grid;
+    grid-template-columns: 1fr 0.2fr;
+    border: 1px solid #e0e0e0;
+    border-left: none;
+    border-right: none;
+  }
+  .text_input_post1 > form > input {
+    outline: none;
+    border: none;
+    font-weight: 400;
+    font-family: Roboto "sans-serif";
+    font-size: 1rem;
+    padding: 0.7rem 1rem;
+    width: 100%;
+  }
+  .mobile_comments {
+    display: block;
+    grid-row: 4/5;
+  }
+  .grid_posts {
+    grid-auto-rows: 10rem;
+  }
+  .image_post {
+    max-height: 10rem;
+  }
+  .inner_div1 {
+    display: flex;
+    align-items: center;
+  }
+  .post_image {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+  }
+  .post_grid > div {
+    border-left: none;
+  }
 }
