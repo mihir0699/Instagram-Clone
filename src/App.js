@@ -10,31 +10,31 @@ import PrivateRoute from "./components/PrivateRoutes";
 import Header from "./components/Header";
 import Post from "./components/Post";
 import Explore from "./components/Explore";
+import Home from "./components/Home";
 
 const DefaultContainer = () => (
-  <div>
-    <div className="container">
-      <Header />
-      <PrivateRoute exact path="/posts/:postId" component={Post} />
-      <PrivateRoute exact path="/explore/posts" component={Explore} />
-      <PrivateRoute exact path="/:userName" component={Profile} />
-    </div>
+  <div className="container">
+    <Header />
+    <PrivateRoute exact path="/" component={Home} />
+    <PrivateRoute exact path="/posts/:postId" component={Post} />
+    <PrivateRoute exact path="/explore/posts" component={Explore} />
+    <PrivateRoute path="/:userName" component={Profile} />
   </div>
 );
 function App() {
   return (
     <div className="App">
-      <ToastProvider>
-        <FireState>
-          <Router>
+      <Router>
+        <ToastProvider>
+          <FireState>
             <Switch>
               <Route exact path="/signup" component={Signup} />
-              <Route exact path="/" component={Login} />
-              <PrivateRoute component={DefaultContainer} />
+              <Route exact path="/login" component={Login} />
+              <Route component={DefaultContainer} />
             </Switch>
-          </Router>
-        </FireState>
-      </ToastProvider>
+          </FireState>
+        </ToastProvider>
+      </Router>
     </div>
   );
 }

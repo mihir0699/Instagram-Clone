@@ -1,13 +1,12 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
-import { Link, useParams, Redirect } from "react-router-dom";
 import firebase from "firebase/app";
 import Loader from "./Loader";
 import { EllipsisOutlined } from "@ant-design/icons";
 import { Popconfirm } from "antd";
+import { Link } from "react-router-dom";
 import FirebaseContext from "../Context/Firebase/FirebaseContext";
 
-const Post = (props) => {
-  const { postId } = useParams();
+const FeedPost = (props) => {
   const [post, setPost] = useState(null);
   const [owner, setOwner] = useState(null);
   const [heart, setHeart] = useState(false);
@@ -15,16 +14,6 @@ const Post = (props) => {
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
   const [latestComments, setLatest] = useState([]);
-  const arraysEqual = (a, b) => {
-    if (a === b) return true;
-    if (a == null || b == null) return false;
-    if (a.length !== b.length) return false;
-
-    for (var i = 0; i < a.length; ++i) {
-      if (a[i].comment != b[i].comment || a[i].time != b[i].time) return false;
-    }
-    return true;
-  };
 
   const handleConfirm = () => {
     var postRef = firebase.storage().ref().child(`/posts/${post.id}`);
@@ -52,7 +41,7 @@ const Post = (props) => {
   useEffect(() => {
     firebase
       .firestore()
-      .doc(`/posts/${postId}`)
+      .doc(`/posts/${props.id}`)
       .onSnapshot((data) => {
         if (!data.exists) {
           props.history.push("/");
@@ -60,105 +49,52 @@ const Post = (props) => {
           if (data.data().comments) {
             data.data().comments.sort(compare);
           }
-          if (post) {
-            if (arraysEqual(data.data().comments, post.comments)) {
-              setPost({ ...data.data(), comments: post.comments });
-            } else {
-              if (data.data().comments) {
-                let newComments = [];
-                data.data().comments.forEach((d) => {
-                  firebase
-                    .firestore()
-                    .doc(`/users/${d.email}`)
-                    .get()
-                    .then((u) => {
-                      d.userName = u.data().userName;
-                      d.photoURL = u.data().photoURL;
-                      newComments.push(d);
-                    });
-                });
-                let count = 0;
-                var newArr = [];
 
-                for (let i = data.data().comments.length - 1; i >= 0; i--) {
-                  if (count == 2) break;
-                  firebase
-                    .firestore()
-                    .doc(`/users/${data.data().comments[i].email}`)
-                    .get()
-                    .then((u) => {
-                      let temp = {};
-                      temp.comment = data.data().comments[i].comment;
-                      temp.time = data.data().comments[i].comment;
-
-                      temp.userName = u.data().userName;
-                      temp.photoURL = u.data().photoURL;
-
-                      newArr.push(temp);
-                    });
-                  count += 1;
-                }
-                setLatest(newArr);
-                setComments(newComments);
-              }
-              setPost(data.data());
-
+          if (data.data().comments) {
+            let newComments = [];
+            data.data().comments.forEach((d) => {
               firebase
                 .firestore()
-                .doc(`/users/${data.data().email}`)
+                .doc(`/users/${d.email}`)
                 .get()
                 .then((u) => {
-                  setOwner(u.data());
+                  d.userName = u.data().userName;
+                  d.photoURL = u.data().photoURL;
+                  newComments.push(d);
                 });
+            });
+            let count = 0;
+            var newArr = [];
+
+            for (let i = data.data().comments.length - 1; i >= 0; i--) {
+              if (count == 2) break;
+              firebase
+                .firestore()
+                .doc(`/users/${data.data().comments[i].email}`)
+                .get()
+                .then((u) => {
+                  let temp = {};
+                  temp.comment = data.data().comments[i].comment;
+                  temp.time = data.data().comments[i].comment;
+
+                  temp.userName = u.data().userName;
+                  temp.photoURL = u.data().photoURL;
+
+                  newArr.push(temp);
+                });
+              count += 1;
             }
-          } else {
-            if (data.data().comments) {
-              let newComments = [];
-              data.data().comments.forEach((d) => {
-                firebase
-                  .firestore()
-                  .doc(`/users/${d.email}`)
-                  .get()
-                  .then((u) => {
-                    d.userName = u.data().userName;
-                    d.photoURL = u.data().photoURL;
-                    newComments.push(d);
-                  });
-              });
-              let count = 0;
-              var newArr = [];
-
-              for (let i = data.data().comments.length - 1; i >= 0; i--) {
-                if (count == 2) break;
-                firebase
-                  .firestore()
-                  .doc(`/users/${data.data().comments[i].email}`)
-                  .get()
-                  .then((u) => {
-                    let temp = {};
-                    temp.comment = data.data().comments[i].comment;
-                    temp.time = data.data().comments[i].comment;
-
-                    temp.userName = u.data().userName;
-                    temp.photoURL = u.data().photoURL;
-
-                    newArr.push(temp);
-                  });
-                count += 1;
-              }
-              setLatest(newArr);
-              setComments(newComments);
-            }
-            setPost(data.data());
-
-            firebase
-              .firestore()
-              .doc(`/users/${data.data().email}`)
-              .get()
-              .then((u) => {
-                setOwner(u.data());
-              });
+            setLatest(newArr);
+            setComments(newComments);
           }
+          setPost(data.data());
+          firebase
+            .firestore()
+            .doc(`/users/${data.data().email}`)
+            .get()
+            .then((u) => {
+              setOwner(u.data());
+            });
         }
       });
   }, []);
@@ -228,6 +164,7 @@ const Post = (props) => {
   };
 
   const handleBookmark = () => {
+    console.log(user);
     if (user.bookmarks) {
       if (!user.bookmarks.includes(post.id)) {
         let bookmarks = user.bookmarks;
@@ -298,8 +235,8 @@ const Post = (props) => {
       {!post || !owner ? (
         <Loader />
       ) : (
-        <div className="post_grid">
-          <div className="post_photo_grid">
+        <div className="post_grid1">
+          <div className="post_photo_grid1">
             <div className="post_info_grid">
               {owner.photoURL ? (
                 <img src={owner.photoURL} className="image_circle" />
@@ -327,26 +264,26 @@ const Post = (props) => {
             <div className="inner_div1">
               <img
                 src={post.url}
-                className="post_image"
+                className="post_image1"
                 onDoubleClick={handleDBClick}
               />
               {heart && <i className="fa fa-heart" aria-hidden="true" />}
             </div>
           </div>
-          <div className="bio_grid">
+          <div className="bio_grid1">
             {owner.photoURL ? (
               <img src={owner.photoURL} className="image_circle1" />
             ) : null}
             <div>
-              <Link href={`/${owner.userName}`} style={{ color: "black" }}>
+              <Link to={`/${owner.userName}`} style={{ color: "black" }}>
                 {" "}
                 <span className="post_userName">{owner.userName}</span>{" "}
               </Link>{" "}
               {post.caption}
             </div>
           </div>
-          <div className="comments_grid">
-            <div className="grid_c_div">
+          <div className="comments_grid1">
+            <div className="grid_c_div1">
               {comments.length ? (
                 <>
                   {comments.map((c) => (
@@ -356,7 +293,7 @@ const Post = (props) => {
                         {" "}
                         <span className="post_userName">
                           <Link
-                            to={`/${c.userName}`}
+                            href={`/${c.userName}`}
                             style={{ color: "black" }}
                           >
                             {c.userName}
@@ -371,27 +308,31 @@ const Post = (props) => {
               ) : null}
             </div>
           </div>
-          {latestComments.length ? (
-            <div className="mobile_comments">
+          {comments.length ? (
+            <div className="mobile_comments1">
               <span className="view_comments">
                 View all {comments.length} comments
               </span>
-              {latestComments.length > 0 &&
-                latestComments.map((com) => (
-                  <div>
-                    <span className="post_userName">
-                      <Link to={`/${com.userName}`} style={{ color: "black" }}>
-                        {com.userName}
-                      </Link>
-                    </span>
-                    &nbsp;
-                    {com.comment}
-                  </div>
-                ))}
+              {latestComments.length
+                ? latestComments.map((com) => (
+                    <div>
+                      <span className="post_userName">
+                        <Link
+                          to={`/${com.userName}`}
+                          style={{ color: "black" }}
+                        >
+                          {com.userName}
+                        </Link>
+                      </span>
+                      &nbsp;
+                      {com.comment}
+                    </div>
+                  ))
+                : null}
             </div>
           ) : null}
 
-          <div className="compo_grid">
+          <div className="compo_grid1">
             <div className="heart_grid">
               <div>
                 <i
@@ -428,22 +369,9 @@ const Post = (props) => {
                 <span className="likes_div">0 likes</span>
               )}
             </div>
-            <div className="text_input_post">
-              <form onSubmit={handleComment}>
-                <input
-                  type="text"
-                  placeholder="Add a comment"
-                  onChange={(e) => setComment(e.target.value)}
-                  value={comment}
-                />
-                <button className="post_comment" onClick={handleComment}>
-                  Post
-                </button>
-              </form>
-            </div>
           </div>
-          <div className="hidden_input">
-            <div className="text_input_post1">
+          <div className="hidden_input1">
+            <div className="text_input_post2">
               <form onSubmit={handleComment}>
                 <input
                   type="text"
@@ -463,4 +391,4 @@ const Post = (props) => {
   );
 };
 
-export default Post;
+export default FeedPost;

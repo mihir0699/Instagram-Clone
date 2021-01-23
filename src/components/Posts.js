@@ -7,34 +7,65 @@ import { Link } from "react-router-dom";
 import { Spin } from "antd";
 import Loader from "./Loader";
 const Posts = (props) => {
-  const { user, updateProfile } = useContext(FirebaseContext);
+  const { user, updateProfile, posted } = useContext(FirebaseContext);
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState([]);
   useEffect(() => {
     if (props.userName) {
-      let x = [];
-      setLoading(true);
-      firebase
-        .firestore()
-        .collection("users")
-        .where("userName", "==", props.userName)
-        .get()
-        .then((u) => {
+      if (posts) {
+        if (posted) {
+          let x = [];
+          setLoading(true);
           firebase
             .firestore()
-            .collection("posts")
-            .where("email", "==", u.docs[0].data().email)
+            .collection("users")
+            .where("userName", "==", props.userName)
             .get()
-            .then((data) => {
-              data.docs.forEach((post) => {
-                x.push(post.data());
-              });
-              setPosts(x);
-              setLoading(false);
+            .then((u) => {
+              firebase
+                .firestore()
+                .collection("posts")
+
+                .where("email", "==", u.docs[0].data().email)
+                .orderBy("timestamp", "desc")
+                .get()
+                .then((data) => {
+                  data.docs.forEach((post) => {
+                    x.push(post.data());
+                  });
+                  setPosts(x);
+                  setLoading(false);
+                });
             });
-        });
+        } else {
+          let x = [];
+          setLoading(true);
+          firebase
+            .firestore()
+            .collection("users")
+            .where("userName", "==", props.userName)
+            .get()
+            .then((u) => {
+              firebase
+                .firestore()
+                .collection("posts")
+
+                .where("email", "==", u.docs[0].data().email)
+                .orderBy("timestamp", "desc")
+                .get()
+                .then((data) => {
+                  data.docs.forEach((post) => {
+                    x.push(post.data());
+                  });
+                  setPosts(x);
+                  setLoading(false);
+                });
+            });
+        }
+      }
     }
-  }, [props.userName]);
+  }, [posted]);
+
   return (
     <div>
       {loading ? (
@@ -42,36 +73,54 @@ const Posts = (props) => {
       ) : posts.length ? (
         <div className="grid_posts">
           {posts.map((post) => (
-            <a href={`posts/${post.id}`}>
+            <Link to={`/posts/${post.id}`}>
               <div className="image_1">
                 <img src={post.url} className="image_post" />
                 <div className="middle1">
                   <div className="text1">
                     {!post.likes ? (
                       <span>
-                        0 <i class="fa fa-heart-o" aria-hidden="true"></i>
+                        0{" "}
+                        <i
+                          class="fa fa-heart"
+                          aria-hidden="true"
+                          style={{ color: "white" }}
+                        ></i>
                       </span>
                     ) : (
                       <span>
                         {post.likes.length}{" "}
-                        <i class="fa fa-heart-o" aria-hidden="true"></i>
+                        <i
+                          class="fa fa-heart"
+                          aria-hidden="true"
+                          style={{ color: "white" }}
+                        ></i>
                       </span>
                     )}
                     &nbsp;&nbsp;
                     {!post.comments ? (
                       <span>
-                        0 <i class="fa fa-comment-o" aria-hidden="true"></i>
+                        0{" "}
+                        <i
+                          class="fa fa-comment"
+                          aria-hidden="true"
+                          style={{ color: "white" }}
+                        ></i>
                       </span>
                     ) : (
                       <span>
                         {post.comments.length}{" "}
-                        <i class="fa fa-comment-o" aria-hidden="true" />
+                        <i
+                          class="fa fa-comment"
+                          aria-hidden="true"
+                          style={{ color: "white" }}
+                        />
                       </span>
                     )}
                   </div>
                 </div>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
       ) : (

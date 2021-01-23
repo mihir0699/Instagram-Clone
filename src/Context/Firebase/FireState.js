@@ -13,6 +13,7 @@ const FireState = (props) => {
     user: null,
     loading: true,
     error: null,
+    posted: false,
   };
   const [state, dispatch] = useReducer(FireReducer, initialState);
 
@@ -160,7 +161,7 @@ const FireState = (props) => {
           post.id = id;
           post.email = state.user.email;
           post.url = url;
-          post.caption = caption;
+          if (caption) post.caption = caption;
           post.timestamp = firebase.firestore.FieldValue.serverTimestamp();
           firebase
             .firestore()
@@ -168,7 +169,10 @@ const FireState = (props) => {
             .doc(id)
             .set(post)
             .then(() => {
-              console.log("posted successfully");
+              dispatch({ type: "POSTED" });
+              setTimeout(() => {
+                dispatch({ type: "REMOVE_POSTED" });
+              }, 2000);
             });
         });
     });
@@ -185,6 +189,7 @@ const FireState = (props) => {
         error: state.error,
         updateProfile,
         uploadPost,
+        posted: state.posted,
       }}
     >
       {" "}

@@ -52,7 +52,7 @@ const Saved = (props) => {
       ) : posts.length ? (
         <div className="grid_posts">
           {posts.map((post) => (
-            <a href={`posts/${post.id}`}>
+            <Link to={`/posts/${post.id}`}>
               <div className="image_1">
                 <img src={post.url} className="image_post" />
                 <div className="middle1">
@@ -81,7 +81,7 @@ const Saved = (props) => {
                   </div>
                 </div>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
       ) : (

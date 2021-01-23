@@ -42,23 +42,41 @@ const Explore = (props) => {
                   <div className="text1">
                     {!post.likes ? (
                       <span>
-                        0 <i class="fa fa-heart-o" aria-hidden="true"></i>
+                        0{" "}
+                        <i
+                          class="fa fa-heart"
+                          aria-hidden="true"
+                          style={{ color: "white" }}
+                        ></i>
                       </span>
                     ) : (
                       <span>
                         {post.likes.length}{" "}
-                        <i class="fa fa-heart-o" aria-hidden="true"></i>
+                        <i
+                          class="fa fa-heart"
+                          aria-hidden="true"
+                          style={{ color: "white" }}
+                        ></i>
                       </span>
                     )}
                     &nbsp;&nbsp;
                     {!post.comments ? (
                       <span>
-                        0 <i class="fa fa-comment-o" aria-hidden="true"></i>
+                        0{" "}
+                        <i
+                          class="fa fa-comment"
+                          aria-hidden="true"
+                          style={{ color: "white" }}
+                        ></i>
                       </span>
                     ) : (
                       <span>
                         {post.comments.length}{" "}
-                        <i class="fa fa-comment-o" aria-hidden="true" />
+                        <i
+                          class="fa fa-comment"
+                          aria-hidden="true"
+                          style={{ color: "white" }}
+                        />
                       </span>
                     )}
                   </div>

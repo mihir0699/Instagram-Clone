@@ -12,7 +12,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
         loading ? null : !user ? (
           <Redirect
             to={{
-              pathname: "/",
+              pathname: "/login",
             }}
           />
         ) : (

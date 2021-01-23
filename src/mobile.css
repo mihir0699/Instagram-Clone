@@ -110,6 +110,7 @@
     border: 1px solid #e0e0e0;
     border-left: none;
     border-right: none;
+    border-bottom: none;
   }
   .text_input_post1 > form > input {
     outline: none;
@@ -141,5 +142,25 @@
   }
   .post_grid > div {
     border-left: none;
+  }
+  .home_flex {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    justify-content: center;
+    margin: 2rem 2rem;
+  }
+  .social_image {
+    width: 100%;
+    margin-top: 2.5rem;
+  }
+  .sidebar {
+    display: none;
+  }
+  .home_grid {
+    grid-template-columns: 1fr;
+    margin: 1rem 2rem;
+  }
+  .text1 {
+    font-size: 0.7rem;
   }
 }

@@ -9,11 +9,11 @@ import FirebaseContext from "../Context/Firebase/FirebaseContext";
 import firebase from "firebase/app";
 import { Modal, Form, Button, Upload, Input, Alert } from "antd";
 import { UploadOutlined, InboxOutlined } from "@ant-design/icons";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { ToastProvider, useToasts } from "react-toast-notifications";
 
 const Header = () => {
-  const { user, updateProfile, loading, uploadPost } = useContext(
+  const { user, updateProfile, loading, uploadPost, posted } = useContext(
     FirebaseContext
   );
   const { addToast } = useToasts();
@@ -21,6 +21,7 @@ const Header = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [error, setError] = useState(null);
   const [file, setFile] = useState(null);
+  const [v, setV] = useState(null);
   const formItemLayout = {
     labelCol: {
       span: 6,
@@ -49,14 +50,18 @@ const Header = () => {
         setError(null);
       }, 2000);
     } else {
-      await uploadPost(file, data.caption);
+      uploadPost(file, data.caption);
       setIsModalVisible(false);
+    }
+  };
+  useEffect(() => {
+    if (posted) {
       addToast("Posted successfully", {
         appearance: "success",
         autoDismiss: true,
       });
     }
-  };
+  }, [posted]);
   const normFile = (e) => {
     if (Array.isArray(e)) {
       return e;
@@ -80,6 +85,10 @@ const Header = () => {
     setIsModalVisible(false);
   };
 
+  const close = () => {
+    setShowUsers([]);
+    setV("");
+  };
   const [showUsers, setShowUsers] = useState([]);
   useEffect(() => {
     firebase
@@ -101,6 +110,7 @@ const Header = () => {
   }, []);
 
   const handleChange = (e) => {
+    setV(e.target.value);
     const regex = new RegExp(e.target.value, "gi");
     let arr = [];
     if (e.target.value == "") {
@@ -117,21 +127,24 @@ const Header = () => {
     <div>
       {!loading ? (
         <nav>
-          <label>
-            <img src={InstaImage} className="logo" />
-          </label>
+          <NavLink to={`/`}>
+            <label style={{ cursor: "pointer" }}>
+              <img src={InstaImage} className="logo" />
+            </label>
+          </NavLink>
           <div>
             <input
               type="text"
               className="input_header"
               placeholder="Search"
               onChange={handleChange}
+              value={v}
             />
             <ul className="list-group">
               {showUsers.map((data) => (
                 <>
                   <a href={`/${data.userName}`}>
-                    <li className="list-group-item">
+                    <li className="list-group-item" onClick={close}>
                       {data.photoURL ? (
                         <img src={data.photoURL} className="search_img" />
                       ) : (
@@ -148,14 +161,16 @@ const Header = () => {
             </ul>
           </div>
           <ul className="header_list">
-            <li>
-              <img src={Home} />
-            </li>
-            <a href="/explore/posts">
+            <NavLink to={`/`}>
+              <li>
+                <img src={Home} />
+              </li>
+            </NavLink>
+            <NavLink to={`/explore/posts`}>
               <li>
                 <img src={Explore} className="display_explore" />
               </li>
-            </a>
+            </NavLink>
             <li>
               <img
                 src={Plus}
@@ -204,6 +219,7 @@ const Header = () => {
                   listType="picture"
                   maxCount={1}
                   onChange={handleFileChange}
+                  accept="image/*"
                 >
                   <Button icon={<UploadOutlined />}>Click to upload</Button>
                 </Upload>
