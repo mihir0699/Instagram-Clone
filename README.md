@@ -1,70 +1,59 @@
-# Getting Started with Create React App
+# Welcome to Mihir's Instagram Clone! ✨
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://foodeazy.herokuapp.com/)&nbsp;[![Build passing](https://img.shields.io/badge/Build-Passing-brightgreen.svg?style=flat-square)](https://foodeazy.herokuapp.com/)&nbsp;[![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=102)](https://foodeazy.herokuapp.com/)&nbsp;[![License](https://img.shields.io/badge/license-MIT-brightgreen)](https://foodeazy.herokuapp.com/)&nbsp;![Made with Love in India](https://madewithlove.org.in/badge.svg)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+I have made this Instagram Clone using technologies like React.js, firebase and Ant Design. It has all the basic functionalties instagram offers.
+**PS:** I have not copied a single line of code from any video tutorial. All the code is my own hardwork.
 
-## Available Scripts
+**Project Link** - ***https://foodeazy.herokuapp.com/***
 
-In the project directory, you can run:
 
-### `npm start`
+## Features and Functionalities 😃
+ - User sign up and login using Facebook and Email-Password
+ - Edit Profile
+ - Follow/Unfollow Users
+ - Add/Delete Posts
+ - Like/Unlike Posts
+ - Comment on Posts
+ - Explore Posts 
+ - Get Suggestions to follow other users
+ - Personalized feed of posts
+ - Search for other Users
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+ 
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `npm test`
+ ## Screenshots
+ ### Login Page![enter image description here](https://raw.githubusercontent.com/Devforlife07/foodeazy/master/readme_images/login.png?token=ALT5AMAOLRKFR423UUHLK6C7KJJ4Y)
+### Email Verify Page![enter image description here](https://raw.githubusercontent.com/mihir0699/foodeazy/master/readme_images/verify.png?token=ALT5AMCAUZLVKWU4UFAGZVC7KJKEG)
+### Home Page
+![enter image description here](https://raw.githubusercontent.com/mihir0699/foodeazy/master/readme_images/menu.png?token=ALT5AMAG4JWL7EOHY2IT7JC7KJKAQ)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Cart
+![enter image description here](https://raw.githubusercontent.com/mihir0699/foodeazy/master/readme_images/cart.png?token=ALT5AMCPL6C2W723CZYJZZK7KJKYY)
+### Checkout
+![enter image description here](https://raw.githubusercontent.com/mihir0699/foodeazy/master/readme_images/checkout.png?token=ALT5AMHX44VS5BX2PHTDSY27KJK4K)
+### Contact Us
+![enter image description here](https://raw.githubusercontent.com/Devforlife07/FoodEazy/master/readme_images/contact_us.png)
+### Add Dish (Admin)
+![enter image description here](https://raw.githubusercontent.com/mihir0699/foodeazy/master/readme_images/add_dish.png?token=ALT5AMAOEZ2YQ2ECJJMYZCC7KJK6I)
+### Delete Dish (Admin)
+![enter image description here](https://raw.githubusercontent.com/mihir0699/foodeazy/master/readme_images/delete_items.png?token=ALT5AMHLZNKOIMXWOKUKY7K7KJLCE)
+## Tech Stack 💻
 
-### `npm run build`
+ - [React.js](https://reactjs.org/)
+ - [Firebase (Firestore+Storage+Hosting)](https://firebase.google.com/)
+ - [Ant Design](https://ant.design/)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+ 
+ 
+## 🤩 Don't forget to give this repo a ⭐ if you like this repo and want to appreciate our efforts
+ 
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
+[![forthebadge](https://forthebadge.com/images/badges/built-by-developers.svg)](https://forthebadge.com)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
