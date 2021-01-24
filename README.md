@@ -4,7 +4,7 @@
 I have made this Instagram Clone using technologies like React.js, firebase and Ant Design. It has all the basic functionalties instagram offers.
 **PS:** I have not copied a single line of code from any video tutorial. All the code is my own hardwork.
 
-**Project Link** - ***https://mihir-insta.firebaseapp.com/***
+**Project Link** - ***https://foodeazy.herokuapp.com/***
 
 
 ## Features and Functionalities 😃
@@ -18,26 +18,26 @@ I have made this Instagram Clone using technologies like React.js, firebase and 
  - Get Suggestions to follow other users
  - Personalized feed of posts
  - Search for other Users
+ - Bookmark Posts
 
  
 
 
  ## Screenshots
- ### Login Page![enter image description here](https://raw.githubusercontent.com/Devforlife07/foodeazy/master/readme_images/login.png?token=ALT5AMAOLRKFR423UUHLK6C7KJJ4Y)
-### Email Verify Page![enter image description here](https://raw.githubusercontent.com/mihir0699/foodeazy/master/readme_images/verify.png?token=ALT5AMCAUZLVKWU4UFAGZVC7KJKEG)
-### Home Page
-![enter image description here](https://raw.githubusercontent.com/mihir0699/foodeazy/master/readme_images/menu.png?token=ALT5AMAG4JWL7EOHY2IT7JC7KJKAQ)
+ ### Auth Page
+ ![enter image description here](https://raw.githubusercontent.com/mihir0699/Instagram-Clone/master/git_images/auth.PNG?token=ALT5AMAAKUKBS6T4V2DVEWTAC2WQ4)
+### Profile Page
+![enter image description here](https://raw.githubusercontent.com/mihir0699/Instagram-Clone/master/git_images/profile.PNG?token=ALT5AME5MADQFC77RFW3GBLAC2WVU)
 
-### Cart
-![enter image description here](https://raw.githubusercontent.com/mihir0699/foodeazy/master/readme_images/cart.png?token=ALT5AMCPL6C2W723CZYJZZK7KJKYY)
-### Checkout
-![enter image description here](https://raw.githubusercontent.com/mihir0699/foodeazy/master/readme_images/checkout.png?token=ALT5AMHX44VS5BX2PHTDSY27KJK4K)
-### Contact Us
-![enter image description here](https://raw.githubusercontent.com/Devforlife07/FoodEazy/master/readme_images/contact_us.png)
-### Add Dish (Admin)
-![enter image description here](https://raw.githubusercontent.com/mihir0699/foodeazy/master/readme_images/add_dish.png?token=ALT5AMAOEZ2YQ2ECJJMYZCC7KJK6I)
-### Delete Dish (Admin)
-![enter image description here](https://raw.githubusercontent.com/mihir0699/foodeazy/master/readme_images/delete_items.png?token=ALT5AMHLZNKOIMXWOKUKY7K7KJLCE)
+### Feed Page
+![enter image description here](https://raw.githubusercontent.com/mihir0699/Instagram-Clone/master/git_images/feed.PNG?token=ALT5AMCRJBU2ILGAWVDW6UDAC2WYK)
+### Post Page
+![enter image description here](https://raw.githubusercontent.com/mihir0699/Instagram-Clone/master/git_images/Post.PNG?token=ALT5AMD6ZVXRPWNKGMPC4CLAC2W3U)
+### Resposiveness
+![enter image description here](https://raw.githubusercontent.com/mihir0699/Instagram-Clone/master/git_images/responsive.PNG?token=ALT5AMHS2GTGY667U3PZ7ATAC2W5S)
+
+
+
 ## Tech Stack 💻
 
  - [React.js](https://reactjs.org/)
