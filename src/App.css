@@ -782,7 +782,7 @@ nav {
 .post_grid1 {
   display: grid;
   grid-template-columns: 1fr;
-  margin: 1rem;
+  margin: 1rem 0.5rem;
   background-color: white;
   grid-template-rows: 0.8fr 0.12fr 0.06fr 0.07fr 0.05fr;
   border: 1px solid #e0e0e0;

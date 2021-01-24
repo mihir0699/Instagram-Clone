@@ -5,12 +5,14 @@ import { EllipsisOutlined } from "@ant-design/icons";
 import { Popconfirm } from "antd";
 import { Link } from "react-router-dom";
 import FirebaseContext from "../Context/Firebase/FirebaseContext";
+import UserImage from "../images/user.svg";
 
 const FeedPost = (props) => {
   const [post, setPost] = useState(null);
   const [owner, setOwner] = useState(null);
   const [heart, setHeart] = useState(false);
   const myRef = useRef(null);
+
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
   const [latestComments, setLatest] = useState([]);
@@ -371,7 +373,9 @@ const FeedPost = (props) => {
             <div className="post_info_grid">
               {owner.photoURL ? (
                 <img src={owner.photoURL} className="image_circle" />
-              ) : null}
+              ) : (
+                <img src={UserImage} className="image_circle" />
+              )}
               <div>
                 <Link to={`/${owner.userName}`} style={{ color: "black" }}>
                   {owner.userName}
@@ -404,7 +408,9 @@ const FeedPost = (props) => {
           <div className="bio_grid1">
             {owner.photoURL ? (
               <img src={owner.photoURL} className="image_circle1" />
-            ) : null}
+            ) : (
+              <img src={UserImage} className="image_circle1" />
+            )}
             <div>
               <Link to={`/${owner.userName}`} style={{ color: "black" }}>
                 {" "}

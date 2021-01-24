@@ -121,6 +121,7 @@ const Signup = (props) => {
 
         // The signed-in user info.
         var user = result.user;
+
         let email = user.email,
           name = user.displayName,
           photoURL = user.photoURL;

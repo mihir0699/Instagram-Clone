@@ -177,7 +177,6 @@ const Profile = (props) => {
       values.file = file;
       updateProfile(values);
       setVisible(false);
-      props.history.push(`/${values.userName}`);
     }
   };
   const onFormLayoutChange = ({ layout }) => {
