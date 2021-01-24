@@ -117,12 +117,12 @@ const Home = () => {
                   .then((data) => {
                     x.unshift(data.data());
                     x.sort(func);
-                    let z = x.slice(0, 5);
+                    let z = x.slice(0, 4);
 
                     setUsers(z);
                   });
               } else {
-                let z = x.slice(0, 5);
+                let z = x.slice(0, 4);
 
                 setUsers(z);
               }
@@ -151,13 +151,13 @@ const Home = () => {
                   .then((data) => {
                     x.unshift(data.data());
                     x.sort(func);
-                    let z = x.slice(0, 5);
+                    let z = x.slice(0, 4);
 
                     setUsers(z);
                   });
               }
               x.sort(func);
-              let z = x.slice(0, 5);
+              let z = x.slice(0, 4);
 
               setUsers(z);
             }
