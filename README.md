@@ -13,6 +13,7 @@ I have made this Instagram Clone using technologies like React.js, firebase and 
  - Follow/Unfollow Users
  - Add/Delete Posts
  - Like/Unlike Posts
+ - Like Posts by double tap
  - Comment on Posts
  - Explore Posts 
  - Get Suggestions to follow other users
