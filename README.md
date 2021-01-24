@@ -4,7 +4,7 @@
 I have made this Instagram Clone using technologies like React.js, firebase and Ant Design. It has all the basic functionalties instagram offers.
 **PS:** I have not copied a single line of code from any video tutorial. All the code is my own hardwork.
 
-**Project Link** - ***https://foodeazy.herokuapp.com/***
+**Project Link** - ***https://mihir-insta.firebaseapp.com/login***
 
 
 ## Features and Functionalities 😃
