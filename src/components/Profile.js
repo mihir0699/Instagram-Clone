@@ -18,11 +18,12 @@ import ImgCrop from "antd-img-crop";
 import "antd/es/modal/style";
 import "antd/es/slider/style";
 import Saved from "./Saved";
+import Post from "./Post";
 const Profile = (props) => {
   const [contextUser, setContextUser] = useState(null);
   const { addToast } = useToasts();
   const [follow, setFollow] = useState(null);
-  const { user, updateProfile } = useContext(FirebaseContext);
+  const { user, updateProfile, update } = useContext(FirebaseContext);
   let { userName } = useParams();
   const [file, setFile] = useState(null);
   const { TabPane } = Tabs;
@@ -174,12 +175,9 @@ const Profile = (props) => {
   const handleFinish = async (values) => {
     if (!validation?.help1?.length) {
       values.file = file;
-      await updateProfile(values);
+      updateProfile(values);
       setVisible(false);
-      addToast("Profile Updated Successfully", {
-        appearance: "success",
-        autoDismiss: true,
-      });
+      props.history.push(`/${values.userName}`);
     }
   };
   const onFormLayoutChange = ({ layout }) => {

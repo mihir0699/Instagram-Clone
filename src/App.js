@@ -11,6 +11,7 @@ import Header from "./components/Header";
 import Post from "./components/Post";
 import Explore from "./components/Explore";
 import Home from "./components/Home";
+import Not_Found from "./components/Not_Found";
 
 const DefaultContainer = () => (
   <div className="container">
@@ -18,7 +19,8 @@ const DefaultContainer = () => (
     <PrivateRoute exact path="/" component={Home} />
     <PrivateRoute exact path="/posts/:postId" component={Post} />
     <PrivateRoute exact path="/explore/posts" component={Explore} />
-    <PrivateRoute path="/:userName" component={Profile} />
+    <PrivateRoute exact path="/:userName" component={Profile} />
+    <PrivateRoute exact path="/image/not_found" component={Not_Found} />
   </div>
 );
 function App() {

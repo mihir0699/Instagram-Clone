@@ -27,6 +27,7 @@ const Signup = (props) => {
     facebookSignup,
     isAuthenticated,
     loading: newLoading,
+    error,
   } = useContext(FirebaseContext);
 
   const onFinish = async (values) => {
@@ -36,6 +37,15 @@ const Signup = (props) => {
   useEffect(() => {
     if (user) props.history.push(`/${user.userName}`);
   }, [user]);
+
+  useEffect(() => {
+    if (error) {
+      addToast(error, {
+        appearance: "error",
+        autoDismiss: true,
+      });
+    }
+  }, [error]);
 
   const checkUserName = (e) => {
     setLoading({ ...loading, status1: "validating" });

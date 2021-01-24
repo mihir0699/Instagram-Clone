@@ -14,6 +14,7 @@ const FireState = (props) => {
     loading: true,
     error: null,
     posted: false,
+    update: false,
   };
   const [state, dispatch] = useReducer(FireReducer, initialState);
 
@@ -58,6 +59,12 @@ const FireState = (props) => {
         user.userName = values.userName;
         docRef.set(user);
         dispatch({ type: "SIGNUP", payload: user });
+      })
+      .catch((e) => {
+        dispatch({ type: "SET_ERROR", payload: e.message });
+        setTimeout(() => {
+          dispatch({ type: "REMOVE_ERROR" });
+        }, 2000);
       });
   };
 
@@ -72,8 +79,6 @@ const FireState = (props) => {
         });
       })
       .catch((e) => {
-        console.log(e);
-        dispatch({ type: "SET_ERROR", payload: e.message });
         setTimeout(() => {
           dispatch({ type: "REMOVE_ERROR" });
         }, 2000);
@@ -122,23 +127,54 @@ const FireState = (props) => {
           .child(filePath)
           .getDownloadURL()
           .then((url) => {
-            console.log(values);
-            firebase.firestore().collection("users").doc(values.email).update({
-              name: values.name,
-              userName: values.username,
-              bio: values.bio,
-              photoURL: url,
-              website: values.website,
-            });
+            let b, x;
+            if (values.bio) b = values.bio;
+            else b = "";
+            if (values.website) x = values.website;
+            else x = "";
+
+            firebase
+              .firestore()
+              .collection("users")
+              .doc(values.email)
+              .update({
+                name: values.name,
+                userName: values.username,
+                bio: b,
+                photoURL: url,
+                website: x,
+              })
+              .then(() => {
+                dispatch({ type: "UPDATE_TRUE" });
+                setTimeout(() => {
+                  dispatch({ type: "UPDATE_FALSE" });
+                }, 2000);
+              });
           });
       });
     } else {
-      firebase.firestore().collection("users").doc(values.email).update({
-        name: values.name,
-        userName: values.username,
-        bio: values.bio,
-        website: values.website,
-      });
+      let b, x;
+      if (values.bio) b = values.bio;
+      else b = "";
+      if (values.website) x = values.website;
+      else x = "";
+
+      firebase
+        .firestore()
+        .collection("users")
+        .doc(values.email)
+        .update({
+          name: values.name,
+          userName: values.username,
+          bio: b,
+          website: x,
+        })
+        .then(() => {
+          dispatch({ type: "UPDATE_TRUE" });
+          setTimeout(() => {
+            dispatch({ type: "UPDATE_FALSE" });
+          }, 2000);
+        });
     }
   };
 
@@ -190,6 +226,7 @@ const FireState = (props) => {
         updateProfile,
         uploadPost,
         posted: state.posted,
+        update: state.update,
       }}
     >
       {" "}

@@ -47,9 +47,7 @@
   .userName_profile {
     font-size: 1.6rem;
   }
-  .display_explore {
-    display: none;
-  }
+
   .header_list {
     margin-right: 1.5rem;
   }
@@ -60,12 +58,13 @@
     height: 15rem;
   }
   .grid_posts {
-    margin: 2rem 1rem;
+    margin: 0rem 1rem;
   }
   .post_grid {
     grid-template-columns: 1fr;
     grid-template-rows: 0.8fr 0.18fr 0.06fr 0.07fr 0.05fr;
     border: 1px solid #e0e0e0;
+    margin: 1rem 2rem;
   }
   .post_photo_grid {
     grid-row: 1/2;
@@ -161,6 +160,12 @@
     margin: 1rem 2rem;
   }
   .text1 {
-    font-size: 0.7rem;
+    font-size: 0.25rem;
+  }
+  .li {
+    margin-left: 0.5rem;
+  }
+  .hide_home {
+    display: none;
   }
 }

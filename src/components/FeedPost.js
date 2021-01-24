@@ -14,6 +14,7 @@ const FeedPost = (props) => {
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
   const [latestComments, setLatest] = useState([]);
+  let l;
 
   const handleConfirm = () => {
     var postRef = firebase.storage().ref().child(`/posts/${post.id}`);
@@ -42,52 +43,61 @@ const FeedPost = (props) => {
     firebase
       .firestore()
       .doc(`/posts/${props.id}`)
-      .onSnapshot((data) => {
+      .get()
+      .then((data) => {
         if (!data.exists) {
           props.history.push("/");
         } else {
           if (data.data().comments) {
-            data.data().comments.sort(compare);
-          }
+            let x = data.data().comments;
+            x.sort(compare);
 
-          if (data.data().comments) {
             let newComments = [];
-            data.data().comments.forEach((d) => {
-              firebase
-                .firestore()
-                .doc(`/users/${d.email}`)
-                .get()
-                .then((u) => {
-                  d.userName = u.data().userName;
-                  d.photoURL = u.data().photoURL;
-                  newComments.push(d);
-                });
+            let resol = [];
+            for (let i = 0; i < x.length; i++) {
+              resol.push(
+                firebase
+                  .firestore()
+                  .doc(`/users/${x[i].email}`)
+                  .get()
+                  .then((u) => {
+                    let p = {};
+                    p = {
+                      ...x[i],
+                      userName: u.data().userName,
+                      photoURL: u.data().photoURL,
+                    };
+                    return p;
+                  })
+              );
+            }
+            Promise.all(resol).then((ans) => {
+              setComments([...ans]);
             });
+
             let count = 0;
             var newArr = [];
 
-            for (let i = data.data().comments.length - 1; i >= 0; i--) {
+            for (let i = x.length - 1; i >= 0; i--) {
               if (count == 2) break;
               firebase
                 .firestore()
-                .doc(`/users/${data.data().comments[i].email}`)
+                .doc(`/users/${x[i].email}`)
                 .get()
                 .then((u) => {
                   let temp = {};
-                  temp.comment = data.data().comments[i].comment;
-                  temp.time = data.data().comments[i].comment;
-
+                  temp.comment = x[i].comment;
+                  temp.time = x[i].comment;
                   temp.userName = u.data().userName;
                   temp.photoURL = u.data().photoURL;
-
                   newArr.push(temp);
                 });
               count += 1;
             }
             setLatest(newArr);
-            setComments(newComments);
           }
           setPost(data.data());
+
           firebase
             .firestore()
             .doc(`/users/${data.data().email}`)
@@ -99,6 +109,81 @@ const FeedPost = (props) => {
       });
   }, []);
 
+  const reload = () => {
+    firebase
+      .firestore()
+      .doc(`/posts/${post.id}`)
+      .get()
+      .then((data) => {
+        if (!data.exists) {
+          props.history.push("/");
+        } else {
+          if (data.data().comments) {
+            let x = data.data().comments;
+            x.sort(compare);
+
+            let newComments = [];
+            let resol = [];
+            for (let i = 0; i < x.length; i++) {
+              resol.push(
+                firebase
+                  .firestore()
+                  .doc(`/users/${x[i].email}`)
+                  .get()
+                  .then((u) => {
+                    let p = {};
+                    p = {
+                      ...x[i],
+                      userName: u.data().userName,
+                      photoURL: u.data().photoURL,
+                    };
+                    return p;
+                  })
+              );
+            }
+            Promise.all(resol).then((ans) => {
+              setComments([...ans]);
+            });
+
+            let count = 0;
+            var newArr = [];
+
+            for (let i = x.length - 1; i >= 0; i--) {
+              if (count == 2) break;
+              firebase
+                .firestore()
+                .doc(`/users/${x[i].email}`)
+                .get()
+                .then((u) => {
+                  let temp = {};
+                  temp.comment = x[i].comment;
+                  temp.time = x[i].comment;
+                  temp.userName = u.data().userName;
+                  temp.photoURL = u.data().photoURL;
+                  newArr.push(temp);
+                });
+              count += 1;
+            }
+            setLatest(newArr);
+          }
+          setPost(data.data());
+          if (myRef && myRef.current)
+            myRef.current.scrollIntoView({ behavior: "smooth" });
+
+          firebase
+            .firestore()
+            .doc(`/users/${data.data().email}`)
+            .get()
+            .then((u) => {
+              setOwner(u.data());
+            });
+        }
+      });
+    if (myRef && myRef.current)
+      myRef.current.scrollIntoView({ behavior: "smooth" });
+    setComment("");
+  };
+
   const handleDBClick = () => {
     setHeart(true);
     setTimeout(() => {
@@ -106,60 +191,91 @@ const FeedPost = (props) => {
     }, 800);
     if (post.likes) {
       if (!post.likes.includes(user.email)) {
-        post.likes.push(user.email);
         firebase
           .firestore()
           .doc(`/posts/${post.id}`)
-          .update({
-            likes: post.likes,
+          .get()
+
+          .then((data) => {
+            l = data.data().likes;
+            l.push(user.email);
+            firebase.firestore().doc(`/posts/${post.id}`).update({
+              likes: l,
+            });
           })
-          .then(() => {});
+          .then(() => {
+            setPost({ ...post, likes: l });
+          });
       }
     } else {
-      let likes = [];
-      likes.push(user.email);
       firebase
         .firestore()
         .doc(`/posts/${post.id}`)
-        .update({
-          likes,
+        .get()
+        .then((data) => {
+          if (data.data().likes) l = data.data().likes;
+          else l = [];
+          l.push(user.email);
+          firebase.firestore().doc(`/posts/${post.id}`).update({
+            likes: l,
+          });
         })
-        .then(() => {});
+        .then(() => {
+          setPost({ ...post, likes: l });
+        });
     }
   };
 
   const handleLike = () => {
     if (post.likes) {
       if (!post.likes.includes(user.email)) {
-        post.likes.push(user.email);
         firebase
           .firestore()
           .doc(`/posts/${post.id}`)
-          .update({
-            likes: post.likes,
+          .get()
+
+          .then((data) => {
+            l = data.data().likes;
+            l.push(user.email);
+            firebase.firestore().doc(`/posts/${post.id}`).update({
+              likes: l,
+            });
           })
-          .then(() => {});
+          .then(() => {
+            setPost({ ...post, likes: l });
+          });
       } else {
-        let likes = post.likes;
-        likes = likes.filter((like) => like !== user.email);
         firebase
           .firestore()
           .doc(`/posts/${post.id}`)
-          .update({
-            likes,
+          .get()
+          .then((data) => {
+            l = data.data().likes;
+            l = l.filter((like) => like !== user.email);
+            firebase.firestore().doc(`/posts/${post.id}`).update({
+              likes: l,
+            });
           })
-          .then(() => {});
+          .then(() => {
+            setPost({ ...post, likes: l });
+          });
       }
     } else {
-      let likes = [];
-      likes.push(user.email);
       firebase
         .firestore()
         .doc(`/posts/${post.id}`)
-        .update({
-          likes,
+        .get()
+        .then((data) => {
+          if (data.data().likes) l = data.data().likes;
+          else l = [];
+          l.push(user.email);
+          firebase.firestore().doc(`/posts/${post.id}`).update({
+            likes: l,
+          });
         })
-        .then(() => {});
+        .then(() => {
+          setPost({ ...post, likes: l });
+        });
     }
   };
 
@@ -207,28 +323,43 @@ const FeedPost = (props) => {
       newComment.time = Date.now();
       newComment.comment = comment;
       newComment.email = user.email;
-      if (post.comments) {
-        let comments = post.comments;
-        comments.push(newComment);
-        firebase
-          .firestore()
-          .doc(`/posts/${post.id}`)
-          .update({ comments })
-          .then(() => {});
-      } else {
-        let comments = [];
-        comments.push(newComment);
-        firebase
-          .firestore()
-          .doc(`/posts/${post.id}`)
-          .update({ comments })
-          .then(() => {});
-      }
+      firebase
+        .firestore()
+        .doc(`/posts/${post.id}`)
+        .get()
+        .then((data) => {
+          if (data.data().comments) {
+            let comments = data.data().comments;
+            comments.push(newComment);
+            firebase
+              .firestore()
+              .doc(`/posts/${post.id}`)
+              .update({ comments })
+              .then(() => {
+                reload();
+              });
+          } else {
+            let comments = [];
+            comments.push(newComment);
+            firebase
+              .firestore()
+              .doc(`/posts/${post.id}`)
+              .update({ comments })
+              .then(() => {
+                reload();
+              });
+          }
+        });
     }
     if (myRef && myRef.current)
       myRef.current.scrollIntoView({ behavior: "smooth" });
     setComment("");
   };
+
+  useEffect(() => {
+    if (myRef && myRef.current)
+      myRef.current.scrollIntoView({ behavior: "smooth" });
+  }, [comments]);
 
   return (
     <div>
@@ -379,7 +510,11 @@ const FeedPost = (props) => {
                   onChange={(e) => setComment(e.target.value)}
                   value={comment}
                 />
-                <button className="post_comment" type="submit">
+                <button
+                  className="post_comment"
+                  type="submit"
+                  disabled={comment.length ? undefined : "disabled"}
+                >
                   Post
                 </button>
               </form>

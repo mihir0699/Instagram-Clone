@@ -882,8 +882,9 @@ nav {
 
 .suggest_div {
   display: grid;
-  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-columns: 0.8fr 3fr 1fr;
   margin: 1rem auto;
+  column-gap: 10px;
 }
 .un_home {
   color: black;
@@ -926,4 +927,11 @@ nav {
 
 .sidebar1 {
   margin-left: 1rem;
+}
+
+.found_image {
+  margin: 2rem auto;
+  background-repeat: no-repeat;
+  width: auto;
+  max-width: 90%;
 }

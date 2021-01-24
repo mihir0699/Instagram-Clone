@@ -39,5 +39,17 @@ export default (state, action) => {
         posted: false,
       };
     }
+    case "UPDATE_TRUE": {
+      return {
+        ...state,
+        update: true,
+      };
+    }
+    case "UPDATE_FALSE": {
+      return {
+        ...state,
+        update: false,
+      };
+    }
   }
 };

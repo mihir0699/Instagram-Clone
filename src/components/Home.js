@@ -77,7 +77,7 @@ const Home = () => {
         firebase
           .firestore()
           .collection("posts")
-          .where("email", "in", user.following)
+          .where("email", "in", [...user.following, user.email])
           .limit(10)
           .get()
           .then((data) => {
@@ -92,7 +92,7 @@ const Home = () => {
           });
       }
 
-      if (user.following.length > 0) {
+      if (user?.following?.length > 0) {
         firebase
           .firestore()
           .collection("users")
@@ -102,13 +102,30 @@ const Home = () => {
             if (data.docs) {
               let x = [];
               data.docs.forEach((u) => {
-                if (u.data().email !== user.email) x.push(u.data());
+                if (
+                  u.data().email !== user.email &&
+                  u.data().email != "mihir0699@gmail.com"
+                )
+                  x.push(u.data());
               });
               x.sort(func);
-              x.sort(func);
-              let z = x.slice(0, 5);
+              if (!user?.following?.includes("mihir0699@gmail.com")) {
+                firebase
+                  .firestore()
+                  .doc(`/users/mihir0699@gmail.com`)
+                  .get()
+                  .then((data) => {
+                    x.unshift(data.data());
+                    x.sort(func);
+                    let z = x.slice(0, 5);
 
-              setUsers(z);
+                    setUsers(z);
+                  });
+              } else {
+                let z = x.slice(0, 5);
+
+                setUsers(z);
+              }
             }
           });
       } else {
@@ -120,8 +137,25 @@ const Home = () => {
             if (data.docs) {
               let x = [];
               data.docs.forEach((u) => {
-                if (u.data().email != user.email) x.push(u.data());
+                if (
+                  u.data().email != user.email &&
+                  u.data().email != "mihir0699@gmail.com"
+                )
+                  x.push(u.data());
               });
+              if (!user?.following?.includes("mihir0699@gmail.com")) {
+                firebase
+                  .firestore()
+                  .doc(`/users/mihir0699@gmail.com`)
+                  .get()
+                  .then((data) => {
+                    x.unshift(data.data());
+                    x.sort(func);
+                    let z = x.slice(0, 5);
+
+                    setUsers(z);
+                  });
+              }
               x.sort(func);
               let z = x.slice(0, 5);
 
@@ -166,7 +200,7 @@ const Home = () => {
                     <div className="suggest_div">
                       {" "}
                       {u.photoURL ? (
-                        <img src={user.photoURL} className="user_home" />
+                        <img src={u.photoURL} className="user_home" />
                       ) : (
                         <img src={UserImage} className="user_home" />
                       )}
@@ -222,7 +256,7 @@ const Home = () => {
                   <div className="suggest_div">
                     {" "}
                     {u.photoURL ? (
-                      <img src={user.photoURL} className="user_home" />
+                      <img src={u.photoURL} className="user_home" />
                     ) : (
                       <img src={UserImage} className="user_home" />
                     )}
@@ -232,7 +266,7 @@ const Home = () => {
                       </Link>
                       <span className="name_search">{u.name}</span>
                     </div>
-                    {user?.following.includes(u.email) ? (
+                    {user?.following?.includes(u.email) ? (
                       <button
                         className="un_home"
                         onClick={() => handleUnFollow1(u.email)}

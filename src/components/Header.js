@@ -13,9 +13,14 @@ import { NavLink, Link } from "react-router-dom";
 import { ToastProvider, useToasts } from "react-toast-notifications";
 
 const Header = () => {
-  const { user, updateProfile, loading, uploadPost, posted } = useContext(
-    FirebaseContext
-  );
+  const {
+    user,
+    updateProfile,
+    loading,
+    uploadPost,
+    posted,
+    update,
+  } = useContext(FirebaseContext);
   const { addToast } = useToasts();
   const [users, setUsers] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -30,6 +35,15 @@ const Header = () => {
       span: 14,
     },
   };
+
+  useEffect(() => {
+    if (update) {
+      addToast("Profile updated successfully!", {
+        appearance: "success",
+        autoDismiss: true,
+      });
+    }
+  }, [update]);
 
   const handleLogout = () => {
     firebase
@@ -125,7 +139,7 @@ const Header = () => {
   };
   return (
     <div>
-      {!loading ? (
+      {!loading && user ? (
         <nav>
           <NavLink to={`/`}>
             <label style={{ cursor: "pointer" }}>
@@ -161,7 +175,7 @@ const Header = () => {
             </ul>
           </div>
           <ul className="header_list">
-            <NavLink to={`/`}>
+            <NavLink to={`/`} className="hide_home">
               <li>
                 <img src={Home} />
               </li>
@@ -178,6 +192,7 @@ const Header = () => {
                 onClick={showModal}
               />
             </li>
+
             <a href={`/${user.userName}`}>
               <li>
                 {user.photoURL ? (

@@ -25,7 +25,6 @@ const Posts = (props) => {
               firebase
                 .firestore()
                 .collection("posts")
-
                 .where("email", "==", u.docs[0].data().email)
                 .orderBy("timestamp", "desc")
                 .get()
@@ -64,6 +63,7 @@ const Posts = (props) => {
         }
       }
     }
+    setLoading(false);
   }, [posted]);
 
   return (
