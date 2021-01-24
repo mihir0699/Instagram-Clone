@@ -12,6 +12,7 @@ import Post from "./components/Post";
 import Explore from "./components/Explore";
 import Home from "./components/Home";
 import Not_Found from "./components/Not_Found";
+import Footer from "./components/Footer";
 
 const DefaultContainer = () => (
   <div className="container">
@@ -34,6 +35,7 @@ function App() {
               <Route exact path="/login" component={Login} />
               <Route component={DefaultContainer} />
             </Switch>
+            <Footer />
           </FireState>
         </ToastProvider>
       </Router>

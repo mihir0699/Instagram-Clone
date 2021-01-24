@@ -935,3 +935,18 @@ nav {
   width: auto;
   max-width: 90%;
 }
+
+.footer {
+  border-top: 2px solid rgba(0, 0, 0, 0.125);
+  width: 100%;
+  text-align: center;
+  flex: none;
+
+  position: sticky;
+  top: 100%;
+  font-size: 0.9rem;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  align-items: center;
+}
