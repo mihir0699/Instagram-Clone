@@ -47,6 +47,10 @@
   .userName_profile {
     font-size: 1.6rem;
   }
+  .signup_form {
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+  }
 
   .header_list {
     margin-right: 1.5rem;

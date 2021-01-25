@@ -333,14 +333,14 @@ const Profile = (props) => {
                         <img src={UserImage} />
                       )}
                       <div className="modal_div_grid">
-                        <Link
-                          to={`/${follower.userName}`}
+                        <a
+                          href={`/${follower.userName}`}
                           onClick={() => setIsModalVisible1(false)}
                         >
                           <span className="modal_div_userName">
                             {follower.userName}
                           </span>
-                        </Link>
+                        </a>
                         <span className="modal_div_name">
                           {follower.userName}
                         </span>
@@ -385,14 +385,14 @@ const Profile = (props) => {
                         <img src={UserImage} />
                       )}
                       <div className="modal_div_grid">
-                        <Link
-                          to={`/${follower.userName}`}
+                        <a
+                          href={`/${follower.userName}`}
                           onClick={() => setIsModalVisible2(false)}
                         >
                           <span className="modal_div_userName">
                             {follower.userName}
                           </span>
-                        </Link>
+                        </a>
                         <span className="modal_div_name">
                           {follower.userName}
                         </span>

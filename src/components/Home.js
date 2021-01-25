@@ -123,7 +123,6 @@ const Home = () => {
                   });
               } else {
                 let z = x.slice(0, 4);
-
                 setUsers(z);
               }
             }
@@ -152,13 +151,11 @@ const Home = () => {
                     x.unshift(data.data());
                     x.sort(func);
                     let z = x.slice(0, 4);
-
                     setUsers(z);
                   });
               }
               x.sort(func);
               let z = x.slice(0, 4);
-
               setUsers(z);
             }
           });
