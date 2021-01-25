@@ -646,7 +646,6 @@ const Profile = (props) => {
                 </TabPane>
               )}
             </Tabs>
-            ,
           </div>
         ) : (
           <Loader />
