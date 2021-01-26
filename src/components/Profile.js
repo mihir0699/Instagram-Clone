@@ -66,47 +66,97 @@ const Profile = (props) => {
   const [isModalVisible1, setIsModalVisible1] = useState(false);
   const [isModalVisible2, setIsModalVisible2] = useState(false);
 
-  const showModal1 = () => {
-    firebase
-      .firestore()
-      .collection("users")
-      .where("email", "in", User.followers)
-      .get()
-      .then((data) => {
-        let x = data.docs;
-        x = x.map((data) => {
-          let obj = {};
-          const { name, email, userName, photoURL } = data.data();
-          obj.email = email;
-          obj.name = name;
-          obj.userName = userName;
-          obj.photoURL = photoURL;
-          return obj;
+  const showModal1 = async () => {
+    if (User?.followers?.length <= 10) {
+      firebase
+        .firestore()
+        .collection("users")
+        .where("email", "in", User.followers)
+        .get()
+        .then((data) => {
+          let x = data.docs;
+          x = x.map((data) => {
+            let obj = {};
+            const { name, email, userName, photoURL } = data.data();
+            obj.email = email;
+            obj.name = name;
+            obj.userName = userName;
+            obj.photoURL = photoURL;
+            return obj;
+          });
+          setFollowers_show(x);
+          setIsModalVisible1(true);
         });
-        setFollowers_show(x);
-        setIsModalVisible1(true);
+    } else {
+      let resolve = [];
+      User.followers.forEach((u) => {
+        resolve.push(
+          firebase
+            .firestore()
+            .collection("users")
+            .doc(u)
+            .get()
+            .then((data) => {
+              let obj = {};
+              const { name, email, userName, photoURL } = data.data();
+              obj.email = email;
+              obj.name = name;
+              obj.userName = userName;
+              obj.photoURL = photoURL;
+              return obj;
+            })
+        );
       });
+      let res = await Promise.all(resolve);
+      setFollowers_show(res);
+      setIsModalVisible1(true);
+    }
   };
-  const showModal2 = () => {
-    firebase
-      .firestore()
-      .collection("users")
-      .where("email", "in", User.following)
-      .get()
-      .then((data) => {
-        let x = data.docs;
-        x = x.map((data) => {
-          let obj = {};
-          const { name, email, userName, photoURL } = data.data();
-          obj.email = email;
-          obj.name = name;
-          obj.userName = userName;
-          obj.photoURL = photoURL;
-          return obj;
+  const showModal2 = async () => {
+    if (User?.following?.length <= 10) {
+      firebase
+        .firestore()
+        .collection("users")
+        .where("email", "in", User.following)
+        .get()
+        .then((data) => {
+          let x = data.docs;
+          x = x.map((data) => {
+            let obj = {};
+            const { name, email, userName, photoURL } = data.data();
+            obj.email = email;
+            obj.name = name;
+            obj.userName = userName;
+            obj.photoURL = photoURL;
+            return obj;
+          });
+          setFollowing_show(x);
+          setIsModalVisible2(true);
         });
-        setFollowing_show(x);
-        setIsModalVisible2(true);
+    } else {
+      let resolve = [];
+      User.following.forEach((u) => {
+        resolve.push(
+          firebase
+            .firestore()
+            .collection("users")
+            .doc(u)
+            .get()
+            .then((data) => {
+              let obj = {};
+              const { name, email, userName, photoURL } = data.data();
+              obj.email = email;
+              obj.name = name;
+              obj.userName = userName;
+              obj.photoURL = photoURL;
+              return obj;
+            })
+        );
       });
+      let res = await Promise.all(resolve);
+      setFollowing_show(res);
+      setIsModalVisible2(true);
+    }
   };
   const handleOk2 = () => {
     setIsModalVisible2(false);

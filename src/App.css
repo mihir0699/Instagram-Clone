@@ -512,6 +512,7 @@ nav {
   font-weight: 500;
   color: white;
   font-size: 16px;
+
   display: inline;
   padding: 16px 16px;
 }
@@ -537,6 +538,8 @@ nav {
 .post_info_grid {
   display: grid;
   grid-template-columns: 0.5fr 2fr 1fr;
+  margin-left: 0.5rem;
+  margin-right: 0.4rem;
   justify-content: start;
   justify-items: start;
   align-items: center;
@@ -794,7 +797,6 @@ nav {
   display: grid;
   grid-template-rows: 1fr 9fr;
   grid-template-columns: 1fr;
-
   justify-content: center;
 }
 

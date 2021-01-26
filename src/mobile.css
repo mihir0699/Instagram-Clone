@@ -172,4 +172,19 @@
   .hide_home {
     display: none;
   }
+  .edit_image {
+    height: 3rem;
+    display: inline;
+    border-radius: 50%;
+  }
+  .edit_userName {
+    display: inline;
+    margin: 1rem;
+    font-size: 1.5rem;
+    font-family: Roboto "sans-serif";
+  }
+  .image_upload {
+    color: #0095f6;
+    margin: 0.5rem 3.5rem;
+  }
 }

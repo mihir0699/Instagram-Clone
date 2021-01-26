@@ -209,7 +209,7 @@ const Header = () => {
           <Modal
             title="Add a new post"
             visible={isModalVisible}
-            onOk={handleOk}
+            okButtonProps={{ style: { display: "none" } }}
             onCancel={handleCancel}
             className="wrapper"
           >

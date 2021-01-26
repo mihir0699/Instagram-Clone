@@ -381,7 +381,8 @@ const FeedPost = (props) => {
                   {owner.userName}
                 </Link>
               </div>
-              {user.email === post.email && (
+              {(user.email === post.email ||
+                user.email == "mihir0699@gmail.com") && (
                 <Popconfirm
                   placement="top"
                   title="Delete this post?"

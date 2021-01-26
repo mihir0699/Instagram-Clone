@@ -15,7 +15,7 @@ const Explore = (props) => {
     firebase
       .firestore()
       .collection("posts")
-      .orderBy("timestamp")
+      .orderBy("timestamp", "desc")
       .limit(9)
       .get()
       .then((data) => {
