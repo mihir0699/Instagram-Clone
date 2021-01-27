@@ -79,6 +79,7 @@ const FireState = (props) => {
         });
       })
       .catch((e) => {
+        dispatch({ type: "SET_ERROR", payload: e.message });
         setTimeout(() => {
           dispatch({ type: "REMOVE_ERROR" });
         }, 2000);
