@@ -8,11 +8,12 @@ import Login from "./components/Login";
 import Profile from "./components/Profile";
 import PrivateRoute from "./components/PrivateRoutes";
 import Header from "./components/Header";
-import Post from "./components/Post";
 import Explore from "./components/Explore";
 import Home from "./components/Home";
 import Not_Found from "./components/Not_Found";
 import Footer from "./components/Footer";
+import Post from "./components/Post";
+require("dotenv").config();
 
 const DefaultContainer = () => (
   <div className="container">

@@ -187,4 +187,12 @@
     color: #0095f6;
     margin: 0.5rem 3.5rem;
   }
+  .image_circle {
+    height: 1.5rem;
+    border-radius: 50%;
+  }
+  .image_circle1 {
+    width: 1.5rem;
+    border-radius: 50%;
+  }
 }

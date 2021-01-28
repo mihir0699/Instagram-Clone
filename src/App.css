@@ -549,11 +549,11 @@ nav {
 }
 
 .image_circle {
-  height: 80%;
+  height: 2.5rem;
   border-radius: 50%;
 }
 .image_circle1 {
-  width: 80%;
+  width: 2.5rem;
   border-radius: 50%;
 }
 
