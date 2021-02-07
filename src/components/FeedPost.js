@@ -400,6 +400,7 @@ const FeedPost = (props) => {
             <div className="inner_div1">
               <img
                 src={post.url}
+                loading="lazy"
                 className="post_image1"
                 onDoubleClick={handleDBClick}
               />

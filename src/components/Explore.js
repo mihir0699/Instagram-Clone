@@ -37,7 +37,7 @@ const Explore = (props) => {
           {posts.map((post) => (
             <a href={`/posts/${post.id}`}>
               <div className="image_1">
-                <img src={post.url} className="image_post" />
+                <img src={post.url} className="image_post" loading="lazy" />
                 <div className="middle1">
                   <div className="text1">
                     {!post.likes ? (

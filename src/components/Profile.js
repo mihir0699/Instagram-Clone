@@ -546,7 +546,7 @@ const Profile = (props) => {
                   {User.website ? (
                     <div>
                       <a
-                        href={User.website}
+                        href={`//${User.website}`}
                         target="_blank"
                         className="website_div"
                       >
