@@ -6,6 +6,8 @@ I have made this Instagram Clone using technologies like React.js, firebase and 
 
 **Project Link** - ***https://mihir-insta.firebaseapp.com/login***
 
+**Demo Video** - ***https://youtu.be/7j9qi99gRbI***
+
 
 ## Features and Functionalities 😃
  - User sign up and login using Facebook and Email-Password
